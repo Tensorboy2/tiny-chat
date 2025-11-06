@@ -157,51 +157,124 @@ export default function App() {
   };
 
   return (
-    <div style={{
-      display: "flex", flexDirection: "column",
-      height: "100vh", maxWidth: "600px", margin: "0 auto",
-      border: "1px solid #ccc", borderRadius: "10px", overflow: "hidden"
-    }}>
-      <h1>Browser GPT</h1>
-      <p>Untrained model, do not expect coherent output.</p>
-      <div style={{
-        flex: 1, padding: "1rem", overflowY: "auto", background: "#f5f5f5"
-      }}>
-        {messages.map((m, i) => (
-          <div key={i} style={{
-            display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start",
-            marginBottom: "0.5rem"
-          }}>
-            <div style={{
-              maxWidth: "70%", padding: "0.5rem 1rem",
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      height: "100vh",
+      width: "100%",
+      maxWidth: "600px",
+      margin: "0 auto",
+      border: "1px solid #ccc",
+      borderRadius: "10px",
+      overflow: "hidden",
+      background: "#fff",
+      fontFamily: "system-ui, sans-serif",
+    }}
+  >
+    <header
+      style={{
+        padding: "0.5rem 1rem",
+        background: "#007bff",
+        color: "white",
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: "1.2rem",
+        flexShrink: 0,
+      }}
+    >
+      Browser GPT
+    </header>
+
+    <div
+      id="chat-container"
+      style={{
+        flex: 1,
+        overflowY: "auto",
+        padding: "1rem",
+        background: "#f5f5f5",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {messages.map((m, i) => (
+        <div
+          key={i}
+          style={{
+            display: "flex",
+            justifyContent: m.role === "user" ? "flex-end" : "flex-start",
+            marginBottom: "0.5rem",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: "80%",
+              padding: "0.6rem 1rem",
+              borderRadius: "15px",
               background: m.role === "user" ? "#007bff" : "#e0e0e0",
               color: m.role === "user" ? "#fff" : "#000",
-              borderRadius: "15px", wordBreak: "break-word"
-            }}>
-              {m.text}
-            </div>
+              wordBreak: "break-word",
+              fontSize: "0.95rem",
+              lineHeight: "1.4",
+            }}
+          >
+            {m.text}
           </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
-      <div style={{ display: "flex", borderTop: "1px solid #ccc" }}>
-        <textarea
-          rows={2}
-          style={{ flex: 1, border: "none", padding: "0.5rem" }}
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSend();
-            }
-          }}
-          placeholder="Type a message..."
-        />
-        <button onClick={handleSend} style={{ width: "80px", border: "none", background: "#007bff", color: "#fff" }}>
-          Send
-        </button>
-      </div>
+        </div>
+      ))}
+      <div ref={messagesEndRef} />
     </div>
-  );
+
+    <div
+      id="input-container"
+      style={{
+        display: "flex",
+        flexShrink: 0,
+        padding: "0.5rem",
+        borderTop: "1px solid #ccc",
+        background: "#fff",
+        position: "sticky",
+        bottom: 0,
+      }}
+    >
+      <textarea
+        rows={1}
+        style={{
+          flex: 1,
+          resize: "none",
+          border: "1px solid #ccc",
+          borderRadius: "10px",
+          padding: "0.5rem",
+          fontSize: "1rem",
+          outline: "none",
+          marginRight: "0.5rem",
+        }}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+          }
+        }}
+        placeholder="Type a message..."
+      />
+      <button
+        onClick={handleSend}
+        style={{
+          background: "#007bff",
+          color: "white",
+          border: "none",
+          borderRadius: "10px",
+          padding: "0 1rem",
+          fontWeight: "bold",
+          fontSize: "1rem",
+        }}
+      >
+        Send
+      </button>
+    </div>
+  </div>
+);
+
 }
